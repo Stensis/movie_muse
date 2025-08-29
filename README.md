@@ -222,5 +222,4 @@ Place images in `/docs` and reference them here:
 ![Home](docs/home.png)
 ![Details](docs/details.png)
 ![Watchlist](docs/watchlist.png)
-``` --># movie_muse
-# movie_muse
+```
