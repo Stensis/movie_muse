@@ -1,9 +1,9 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { AnimatePresence, motion, TargetAndTransition, Transition, useReducedMotion } from "framer-motion";
+import { AnimatePresence, motion,  useReducedMotion, type TargetAndTransition, type Transition } from "framer-motion";
 import { Link } from "react-router-dom";
 import { Star, Play, Info, Plus, ChevronLeft, ChevronRight } from "lucide-react";
 import { getImageUrl } from "@/services/tmdb";
-import { Props } from "@/lib/types";
+import type { Props } from "@/lib/types";
 
 export function HeroBannerCarousel({ movies, intervalMs = 6000 }: Props) {
     const [idx, setIdx] = useState(0);

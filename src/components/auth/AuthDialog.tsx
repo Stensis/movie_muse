@@ -87,7 +87,7 @@ export function AuthDialog({ open, onOpenChange }: Props) {
                                 onChange={(e) => setSiEmail(e.target.value)}
                                 placeholder="you@example.com"
                             />
-                        </div>xas
+                        </div>
                         <div className="grid gap-2">
                             <Label htmlFor="si-pass">Password</Label>
                             <Input

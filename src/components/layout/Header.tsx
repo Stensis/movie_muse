@@ -4,7 +4,7 @@ import { SearchBar } from "@/components/ui/SearchBar";
 import {
   Select, SelectContent, SelectItem, SelectTrigger, SelectValue,
 } from "@/components/ui/select";
-import { HeaderProps } from "@/lib/types";
+import type { HeaderProps } from "@/lib/types";
 
 type Brand = { label: string; src: string };
 

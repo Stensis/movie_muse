@@ -1,14 +1,13 @@
-// src/services/tmdb.ts
-import {
+import type {
   Credits,
   Genre,
   MovieDetails,
   MoviesResponse,
+  TmdbVideo,
+  TmdbVideosResponse,
   TmdbReviewsResponse,
-  TmdbVideo, 
 } from "@/lib/types";
 
-export type TmdbVideosResponse = { id: number; results: TmdbVideo[] };
 
 const TMDB_API_KEY = import.meta.env.VITE_TMDB_API_KEY!;
 const BASE_URL =
@@ -77,5 +76,3 @@ export const formatRuntime = (minutes: number): string => {
   return `${h}h ${m}m`;
 };
 export const formatRating = (rating: number): string => rating.toFixed(1);
-export { TmdbVideo };
-
