@@ -6,7 +6,7 @@ import {
     signInWithPopup,
     signOut as fbSignOut,
     updateProfile,
-    User,
+    type User,
 } from "firebase/auth";
 import { auth, googleProvider } from "@/lib/firebase";
 

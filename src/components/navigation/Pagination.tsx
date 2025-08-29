@@ -1,5 +1,5 @@
 import { Button } from '@/components/ui/button';
-import { PaginationProps } from '@/lib/types';
+import type { PaginationProps } from '@/lib/types';
 import { ChevronLeft, ChevronRight, MoreHorizontal } from 'lucide-react';
 
 export const Pagination = ({ 

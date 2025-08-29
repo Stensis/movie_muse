@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { getImageUrl, formatRating } from "@/services/tmdb";
 import { Card } from "@/components/ui/card";
 import { Play, Star } from "lucide-react";
-import { MovieCardProps } from "@/lib/types";
+import type { MovieCardProps } from "@/lib/types";
 
 export const MovieCard = ({ movie, className = "" }: MovieCardProps) => {
   return (
