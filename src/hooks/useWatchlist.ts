@@ -1,12 +1,23 @@
 import { useEffect, useMemo, useState } from "react";
-import { doc, getDoc, setDoc, updateDoc, serverTimestamp } from "firebase/firestore";
+import {
+  doc,
+  getDoc,
+  setDoc,
+  updateDoc,
+  serverTimestamp,
+} from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import { useAuth } from "@/contexts/AuthContext";
 
 const LS_KEY = "moviemuse_watchlist";
 
 function readLocal(): number[] {
-  try { return JSON.parse(localStorage.getItem(LS_KEY) || "[]"); } catch { return []; }
+  try {
+    const raw = localStorage.getItem(LS_KEY);
+    return raw ? (JSON.parse(raw) as number[]) : [];
+  } catch {
+    return [];
+  }
 }
 function writeLocal(ids: number[]) {
   localStorage.setItem(LS_KEY, JSON.stringify(ids));
@@ -23,31 +34,36 @@ export function useWatchlist() {
   useEffect(() => {
     let cancelled = false;
     async function load() {
-      if (!user) return;              
+      if (!user) return;
       setLoading(true);
       setError(null);
       try {
         const ref = doc(db, "watchlists", user.uid);
         const snap = await getDoc(ref);
-        const cloudIds: number[] = snap.exists() ? (snap.data().ids ?? []) : [];
-        const merged = Array.from(new Set<number>([...cloudIds, ...readLocal()]));
+        const cloudIds: number[] = snap.exists() ? snap.data().ids ?? [] : [];
+        const merged = Array.from(
+          new Set<number>([...cloudIds, ...readLocal()])
+        );
         if (!cancelled) {
           setIds(merged);
-          writeLocal(merged);          
+          writeLocal(merged);
         }
         if (!snap.exists()) {
           await setDoc(ref, { ids: merged, updatedAt: serverTimestamp() });
         } else if (merged.length !== cloudIds.length) {
           await updateDoc(ref, { ids: merged, updatedAt: serverTimestamp() });
         }
-      } catch (e: any) {
-        if (!cancelled) setError(e?.message || "Failed to load watchlist");
+      } catch (e: unknown) {
+        const msg = e instanceof Error ? e.message : "Failed to load watchlist";
+        if (!cancelled) setError(msg);
       } finally {
         if (!cancelled) setLoading(false);
       }
     }
     load();
-    return () => { cancelled = true; };
+    return () => {
+      cancelled = true;
+    };
   }, [user]);
 
   // Helpers
@@ -55,21 +71,24 @@ export function useWatchlist() {
 
   async function persist(next: number[]) {
     writeLocal(next);
-    if (!user) return; 
+    if (!user) return;
     setSaving(true);
     setError(null);
     try {
       const ref = doc(db, "watchlists", user.uid);
-      await updateDoc(ref, { ids: next, updatedAt: serverTimestamp() }).catch(async (err) => {
-        // If doc doesn't exist yet, create it
-        if (String(err?.code || "").includes("not-found")) {
-          await setDoc(ref, { ids: next, updatedAt: serverTimestamp() });
-        } else {
-          throw err;
+      await updateDoc(ref, { ids: next, updatedAt: serverTimestamp() }).catch(
+        async (err) => {
+          // If doc doesn't exist yet, create it
+          if (String(err?.code || "").includes("not-found")) {
+            await setDoc(ref, { ids: next, updatedAt: serverTimestamp() });
+          } else {
+            throw err;
+          }
         }
-      });
-    } catch (e: any) {
-      setError(e?.message || "Failed to save watchlist");
+      );
+    } catch (e: unknown) {
+      const msg = e instanceof Error ? e.message : "Failed to save watchlist";
+      setError(msg);
     } finally {
       setSaving(false);
     }
@@ -92,5 +111,8 @@ export function useWatchlist() {
     });
   };
 
-  return useMemo(() => ({ ids, has, add, remove, loading, saving, error }), [ids, loading, saving, error]);
+  return useMemo(
+    () => ({ ids, has, add, remove, loading, saving, error }),
+    [ids, loading, saving, error]
+  );
 }

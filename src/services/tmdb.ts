@@ -8,7 +8,6 @@ import type {
   TmdbReviewsResponse,
 } from "@/lib/types";
 
-
 const TMDB_API_KEY = import.meta.env.VITE_TMDB_API_KEY!;
 const BASE_URL =
   import.meta.env.VITE_TMDB_BASE_URL ?? "https://api.themoviedb.org/3";
@@ -19,10 +18,10 @@ if (!TMDB_API_KEY && import.meta.env.MODE === "development") {
   console.error("[TMDB] Missing VITE_TMDB_API_KEY in your .env file");
 }
 
-const apiRequest = async (
+const apiRequest = async <T>(
   endpoint: string,
   params: Record<string, string | number> = {}
-): Promise<any> => {
+): Promise<T> => {
   const url = new URL(`${BASE_URL}${endpoint}`);
   url.searchParams.append("api_key", TMDB_API_KEY);
   Object.entries(params).forEach(([k, v]) =>
@@ -31,7 +30,7 @@ const apiRequest = async (
   const response = await fetch(url.toString());
   if (!response.ok)
     throw new Error(`API request failed: ${response.statusText}`);
-  return response.json();
+  return response.json() as Promise<T>;
 };
 
 export const tmdbApi = {

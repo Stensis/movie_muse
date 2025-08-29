@@ -2,22 +2,22 @@ import { Button } from '@/components/ui/button';
 import type { PaginationProps } from '@/lib/types';
 import { ChevronLeft, ChevronRight, MoreHorizontal } from 'lucide-react';
 
-export const Pagination = ({ 
-  currentPage, 
-  totalPages, 
-  onPageChange, 
+export const Pagination = ({
+  currentPage,
+  totalPages,
+  onPageChange,
   maxVisiblePages = 5,
   totalResults
 }: PaginationProps) => {
   const getVisiblePages = () => {
     const half = Math.floor(maxVisiblePages / 2);
     let start = Math.max(1, currentPage - half);
-    let end = Math.min(totalPages, start + maxVisiblePages - 1);
+    const end = Math.min(totalPages, start + maxVisiblePages - 1);
     
     if (end - start + 1 < maxVisiblePages) {
       start = Math.max(1, end - maxVisiblePages + 1);
     }
-    
+
     return Array.from({ length: end - start + 1 }, (_, i) => start + i);
   };
 
@@ -73,11 +73,10 @@ export const Pagination = ({
             variant={currentPage === page ? "default" : "outline"}
             size="sm"
             onClick={() => onPageChange(page)}
-            className={`w-10 ${
-              currentPage === page 
-                ? "bg-primary text-primary-foreground" 
+            className={`w-10 ${currentPage === page
+                ? "bg-primary text-primary-foreground"
                 : "bg-secondary/50 border-border/50 hover:bg-secondary"
-            }`}
+              }`}
           >
             {page}
           </Button>
