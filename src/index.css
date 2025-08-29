@@ -1,0 +1,198 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* MovieMuse Design System - Dark cinematic theme with purple/blue gradients */
+
+@layer base {
+  :root {
+    /* Dark cinematic background */
+    --background: 220 26% 8%;
+    --foreground: 210 40% 98%;
+
+    /* Card styling */
+    --card: 220 20% 12%;
+    --card-foreground: 210 40% 98%;
+
+    /* Popover */
+    --popover: 220 20% 12%;
+    --popover-foreground: 210 40% 98%;
+
+    /* Primary brand colors - Purple/magenta accent */
+    --primary: 308 56% 85%;
+    --primary-foreground: 220 26% 8%;
+
+    /* Secondary - Darker card background */
+    --secondary: 220 15% 16%;
+    --secondary-foreground: 210 40% 95%;
+
+    /* Muted elements */
+    --muted: 220 15% 20%;
+    --muted-foreground: 215 15% 65%;
+
+    /* Accent - Teal/cyan highlights */
+    --accent: 180 65% 60%;
+    --accent-foreground: 220 26% 8%;
+
+    /* Destructive */
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 210 40% 98%;
+
+    /* Borders and inputs */
+    --border: 220 15% 25%;
+    --input: 220 15% 20%;
+    --ring: 308 56% 85%;
+
+    /* Rating colors */
+    --rating-gold: 45 93% 58%;
+    --rating-silver: 210 11% 71%;
+
+    /* Gradients */
+    --gradient-primary: linear-gradient(
+      135deg,
+      hsl(220 26% 8%),
+      hsl(240 20% 12%),
+      hsl(260 25% 15%)
+    );
+    --gradient-card: linear-gradient(
+      135deg,
+      hsl(220 20% 12% / 0.8),
+      hsl(240 15% 16% / 0.9)
+    );
+    --gradient-hero: linear-gradient(
+      135deg,
+      hsl(308 56% 85% / 0.1),
+      hsl(180 65% 60% / 0.1)
+    );
+
+    /* Shadows */
+    --shadow-card: 0 4px 20px hsl(220 26% 8% / 0.4);
+    --shadow-glow: 0 0 30px hsl(308 56% 85% / 0.3);
+
+    --radius: 0.75rem;
+
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  /* Dark theme is the default for MovieMuse */
+  .light {
+    --background: 210 40% 98%;
+    --foreground: 220 26% 8%;
+    --card: 210 40% 95%;
+    --card-foreground: 220 26% 8%;
+    --primary: 308 56% 45%;
+    --primary-foreground: 210 40% 98%;
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-gradient-to-br from-background via-background to-muted text-foreground font-medium antialiased;
+    background-attachment: fixed;
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-background;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-muted rounded-full;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-border;
+  }
+}
+
+@layer components {
+  /* Movie card hover effects */
+  .movie-card {
+    @apply relative overflow-hidden rounded-lg bg-gradient-to-br from-card to-secondary/50;
+    @apply shadow-[var(--shadow-card)] transition-all duration-300;
+    @apply hover:scale-105 hover:shadow-[var(--shadow-glow)];
+  }
+
+  .movie-card::before {
+    content: "";
+    @apply absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent;
+    @apply opacity-0 transition-opacity duration-300;
+  }
+
+  .movie-card:hover::before {
+    @apply opacity-100;
+  }
+
+  /* Rating badge */
+  .rating-badge {
+    @apply inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-semibold;
+    @apply bg-background/20 backdrop-blur-sm border border-primary/20;
+  }
+
+  /* Search input */
+  .search-input {
+    @apply bg-secondary/50 border-border/50 backdrop-blur-sm;
+    @apply focus:border-primary/50 focus:bg-secondary/70 transition-all duration-200;
+  }
+
+  /* Navigation buttons */
+  .nav-button {
+    @apply px-4 py-2 rounded-full transition-all duration-200;
+    @apply hover:bg-primary/10 hover:text-primary;
+  }
+
+  .nav-button.active {
+    @apply bg-primary/20 text-primary border border-primary/30;
+  }
+
+  /* Play button */
+  .play-button {
+    @apply absolute inset-0 flex items-center justify-center;
+    @apply bg-background/20 backdrop-blur-sm opacity-0 transition-all duration-300;
+    @apply hover:opacity-100;
+  }
+
+  .movie-card:hover .play-button {
+    @apply opacity-100;
+  }
+  
+}
+
+@keyframes mm-header-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  } /* width of one duplicate row */
+}
+.header-ticker {
+  will-change: transform;
+  animation: mm-header-marquee 20s linear infinite;
+}
+.group:hover .header-ticker {
+  animation-play-state: paused;
+}
