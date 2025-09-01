@@ -1,4 +1,3 @@
-// src/components/movies/MovieCard.tsx
 import { Link } from "react-router-dom";
 import { getImageUrl, formatRating } from "@/services/tmdb";
 import { Card } from "@/components/ui/card";

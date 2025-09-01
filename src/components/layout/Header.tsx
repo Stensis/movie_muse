@@ -1,4 +1,3 @@
-// src/components/layout/Header.tsx
 import { useMemo } from "react";
 import { SearchBar } from "@/components/ui/SearchBar";
 import {

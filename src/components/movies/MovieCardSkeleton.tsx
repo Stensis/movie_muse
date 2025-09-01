@@ -5,11 +5,11 @@ import { Skeleton } from '@/components/ui/skeleton';
 export const MovieCardSkeleton = () => {
   return (
     <Card
-      role="status"                 // ✅ accessible role
-      aria-label="Loading movie"    // ✅ accessible name (matches the test)
+      role="status"                 
+      aria-label="Loading movie"    
       aria-live="polite"
       aria-busy="true"
-      data-testid="movie-skeleton"  // ✅ handy stable hook if you prefer getByTestId
+      data-testid="movie-skeleton" 
       className="overflow-hidden animate-pulse"
     >
       <Skeleton className="aspect-[2/3] w-full" />
