@@ -4,6 +4,7 @@ node_modules/
 # builds & reports
 dist/
 coverage/
+**/coverage/
 
 # env
 .env
