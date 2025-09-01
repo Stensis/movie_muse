@@ -1,9 +1,9 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { AnimatePresence, motion, TargetAndTransition, Transition, useReducedMotion } from "framer-motion";
+import { AnimatePresence, motion, useReducedMotion, type TargetAndTransition, type Transition } from "framer-motion";
 import { Link } from "react-router-dom";
 import { Star, Play, Info, Plus, ChevronLeft, ChevronRight } from "lucide-react";
 import { getImageUrl } from "@/services/tmdb";
-import { Props } from "@/lib/types";
+import type { Props } from "@/lib/types";
 
 export function HeroBannerCarousel({ movies, intervalMs = 6000 }: Props) {
     const [idx, setIdx] = useState(0);
@@ -58,17 +58,18 @@ export function HeroBannerCarousel({ movies, intervalMs = 6000 }: Props) {
     };
 
     // Ken Burns (reduced-motion safe)
-    const kbInitial: TargetAndTransition = useReducedMotion()
+    const kbInitial: TargetAndTransition = reduceMotion
         ? { scale: 1, x: 0 }
         : { scale: 1.06, x: 8 };
 
-    const kbAnimate: TargetAndTransition = useReducedMotion()
+    const kbAnimate: TargetAndTransition = reduceMotion
         ? { scale: 1, x: 0 }
         : { scale: 1, x: 0 };
 
-    const kbTransition: Transition = useReducedMotion()
+    const kbTransition: Transition = reduceMotion
         ? { duration: 0 }
         : { duration: intervalMs / 1000 + 0.5, ease: [0.22, 1, 0.36, 1] as const };
+
 
     const bg = getImageUrl(movie.backdrop_path ?? null, "w780");
 
@@ -130,7 +131,7 @@ export function HeroBannerCarousel({ movies, intervalMs = 6000 }: Props) {
                                     <Play className="h-5 w-5" />
                                     Watch Now
                                 </Link>
-                              
+
                             </div>
                         </div>
                     </div>

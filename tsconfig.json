@@ -18,7 +18,9 @@
     "paths": {
       "@/*": ["./src/*"]
     },
-    "types": ["vite/client"]
+    "isolatedModules": true,
+    "verbatimModuleSyntax": true,
+    "types": ["vite/client", "vitest/globals"]
   },
   "include": ["src", "vite.config.ts"]
 }

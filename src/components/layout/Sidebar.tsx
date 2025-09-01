@@ -14,7 +14,7 @@ import { Link } from "react-router-dom";
 import { useWatchlist } from "@/hooks/useWatchlist";
 import { useQueries } from "@tanstack/react-query";
 import { tmdbApi, getImageUrl } from "@/services/tmdb";
-import { SidebarProps } from "@/lib/types";
+import type { SidebarProps } from "@/lib/types";
 
 const mainCategories = [
   { id: "popular", label: "Popular", icon: Home },

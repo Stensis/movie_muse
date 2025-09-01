@@ -1,4 +1,4 @@
-import { MovieGridProps } from '@/lib/types';
+import type { MovieGridProps } from '@/lib/types';
 import { MovieCard } from './MovieCard';
 import { MovieCardSkeleton } from './MovieCardSkeleton';
 

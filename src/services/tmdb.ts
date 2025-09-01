@@ -1,14 +1,12 @@
-// src/services/tmdb.ts
-import {
+import type {
   Credits,
   Genre,
   MovieDetails,
   MoviesResponse,
+  TmdbVideo,
+  TmdbVideosResponse,
   TmdbReviewsResponse,
-  TmdbVideo, 
 } from "@/lib/types";
-
-export type TmdbVideosResponse = { id: number; results: TmdbVideo[] };
 
 const TMDB_API_KEY = import.meta.env.VITE_TMDB_API_KEY!;
 const BASE_URL =
@@ -20,10 +18,10 @@ if (!TMDB_API_KEY && import.meta.env.MODE === "development") {
   console.error("[TMDB] Missing VITE_TMDB_API_KEY in your .env file");
 }
 
-const apiRequest = async (
+const apiRequest = async <T>(
   endpoint: string,
   params: Record<string, string | number> = {}
-): Promise<any> => {
+): Promise<T> => {
   const url = new URL(`${BASE_URL}${endpoint}`);
   url.searchParams.append("api_key", TMDB_API_KEY);
   Object.entries(params).forEach(([k, v]) =>
@@ -32,7 +30,7 @@ const apiRequest = async (
   const response = await fetch(url.toString());
   if (!response.ok)
     throw new Error(`API request failed: ${response.statusText}`);
-  return response.json();
+  return response.json() as Promise<T>;
 };
 
 export const tmdbApi = {
@@ -77,5 +75,3 @@ export const formatRuntime = (minutes: number): string => {
   return `${h}h ${m}m`;
 };
 export const formatRating = (rating: number): string => rating.toFixed(1);
-export { TmdbVideo };
-

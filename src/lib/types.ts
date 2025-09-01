@@ -148,12 +148,18 @@ export interface PaginationProps {
   totalResults?: number;
 }
 
-export type TmdbVideo = {
+// src/lib/types.ts
+export interface TmdbVideo {
   id: string;
   key: string;
   name: string;
-  site: "YouTube" | string;
-  type: "Trailer" | "Teaser" | "Clip" | string;
+  site: string;              
+  type: 'Trailer' | 'Teaser' | 'Clip' | string;
   official?: boolean;
   published_at?: string;
-};
+}
+
+export interface TmdbVideosResponse {
+  id?: number;
+  results: TmdbVideo[];
+}

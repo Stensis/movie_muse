@@ -19,11 +19,11 @@ import {
 type Props = { open: boolean; onOpenChange: (v: boolean) => void };
 
 function GoogleIcon() {
-  return (
-    <svg viewBox="0 0 24 24" className="w-4 h-4" aria-hidden="true">
-      <path fill="#EA4335" d="M12 10.2v3.6h5.1...Z" />
-    </svg>
-  );
+    return (
+        <svg viewBox="0 0 24 24" className="w-4 h-4" aria-hidden="true">
+            <path fill="#EA4335" d="M12 10.2v3.6h5.1...Z" />
+        </svg>
+    );
 }
 
 export function AuthDialog({ open, onOpenChange }: Props) {
@@ -46,8 +46,9 @@ export function AuthDialog({ open, onOpenChange }: Props) {
         try {
             await fn();
             onOpenChange(false);
-        } catch (e: any) {
-            setErr(e?.message || "Something went wrong");
+        } catch (e: unknown) {
+            const msg = e instanceof Error ? e.message : "Something went wrong";
+            setErr(msg);
         } finally {
             setBusy(false);
         }
@@ -87,7 +88,7 @@ export function AuthDialog({ open, onOpenChange }: Props) {
                                 onChange={(e) => setSiEmail(e.target.value)}
                                 placeholder="you@example.com"
                             />
-                        </div>xas
+                        </div>
                         <div className="grid gap-2">
                             <Label htmlFor="si-pass">Password</Label>
                             <Input

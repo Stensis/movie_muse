@@ -6,10 +6,8 @@ import {
   getImageUrl,
   formatRuntime,
   formatRating,
-  type TmdbVideosResponse,
-  type TmdbVideo,
 } from "@/services/tmdb";
-import type { MovieDetails, Credits, TmdbReviewsResponse, TmdbReview } from "@/lib/types";
+import type { MovieDetails, Credits, TmdbReviewsResponse, TmdbReview, TmdbVideosResponse, TmdbVideo } from "@/lib/types";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { LoadingSpinner } from "@/components/ui/LoadingSpinner";
@@ -138,9 +136,8 @@ export const MovieDetail = () => {
   // Pick the best YouTube trailer
   const candidates: TmdbVideo[] = useMemo(() => {
     return (videos?.results ?? [])
-      .filter((v: any) => v.site === "YouTube")
-      .sort((a: any, b: any) => {
-        // Rank by: official trailers first, then Trailer > Teaser > Clip, then latest
+      .filter((v: TmdbVideo) => v.site === "YouTube")
+      .sort((a: TmdbVideo, b: TmdbVideo) => {
         const typeRank = (t: string) =>
           t === "Trailer" ? 0 : t === "Teaser" ? 1 : t === "Clip" ? 2 : 3;
         const aRank = (a.official ? -1 : 0) * 10 + typeRank(a.type);

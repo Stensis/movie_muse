@@ -8,8 +8,8 @@ import { Pagination } from '@/components/navigation/Pagination';
 import { Sidebar } from '@/components/layout/Sidebar';
 import { useToast } from '@/hooks/use-toast';
 import { HeroBannerCarousel } from '@/components/movies/HeroBanner';
-import { Movie, MoviesResponse } from '@/lib/types';
 import { LoadingSpinner } from '@/components/ui/LoadingSpinner';
+import type { MoviesResponse, Movie } from '@/lib/types';
 
 const DEFAULT_CAT = 'popular';
 
