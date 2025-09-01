@@ -44,12 +44,11 @@ cd movie_muse
 npm install
 ```
 
-### 2) Create `.env.local`
+### 2) Create `.env`
 
 ```bash
 # TMDB (v3)
 VITE_TMDB_API_KEY=YOUR_TMDB_V3_KEY
-# Optional (defaults shown)
 VITE_TMDB_BASE_URL=https://api.themoviedb.org/3
 VITE_TMDB_IMAGE_BASE_URL=https://image.tmdb.org/t/p
 
