@@ -13,7 +13,7 @@ const BRANDS: Brand[] = [
   { label: "Prime Video", src: "https://logos-world.net/wp-content/uploads/2021/04/Amazon-Prime-Video-Logo.jpg" },
   { label: "Disney+", src: "https://www.logo.wine/a/logo/Disney%2B/Disney%2B-White-Dark-Background-Logo.wine.svg" },
   { label: "Hulu", src: "https://greenhouse.hulu.com/app/uploads/sites/12/2023/10/logo-black-3up.svg" },
-  { label: "IMAX", src: "https://logos-world.net/wp-content/uploads/2023/01/IMAX-Logo.png" },
+  { label: "IMAX", src: "https://e7.pngegg.com/pngimages/475/831/png-clipart-imax-logo-cinema-logos.png" },
   { label: "Apple TV+", src: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRSACrXhgsBlkJj0-ecpXZq9fMlHCF_Blz5dw&s" },
   { label: "YouTube", src: "https://pngdownload.io/wp-content/uploads/2024/03/YouTube-logo-video-platform-social-media-transparent-PNG-image-768x461.webp" },
 ];
@@ -21,7 +21,7 @@ const BRANDS: Brand[] = [
 function BrandChip({ b }: { b: Brand }) {
   return (
     <span className="inline-flex items-center gap-2 h-9 px-3 py-1.5 text-[11px] font-semibold transition" title={b.label}>
-      <img src={b.src} alt={`${b.label} logo`} className="h-4 md:h-5 w-auto object-cover" loading="lazy" />
+      <img src={b.src} alt={`${b.label} logo`} className="h-10 md:h-8 w-full object-fit" loading="lazy" />
       <span className="tracking-wide text-foreground/90 hidden xs:inline">{b.label}</span>
     </span>
   );
