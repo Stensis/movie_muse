@@ -1,4 +1,3 @@
-// src/components/layout/Sidebar.tsx
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
@@ -46,13 +45,12 @@ export const Sidebar = ({ activeCategory, onCategoryChange }: SidebarProps) => {
     .map((q) => q.data?.poster_path)
     .filter(Boolean)
     .map((p) => getImageUrl(p!, "w200"));
-
   const watchlistButton = (
     <Button
       variant="ghost"
-      className="w-full justify-between hover:bg-secondary/50"
+      className="w-full justify-between text-foreground/80 hover:bg-secondary/50 hover:!text-white"
       onClick={() => (user ? null : setAuthOpen(true))}
-      asChild={!!user}   // use Link only when logged in
+      asChild={!!user}   // when true, classes go onto <Link>
     >
       {user ? (
         <Link to="/watchlist" className="flex w-full items-center justify-between">
@@ -97,28 +95,27 @@ export const Sidebar = ({ activeCategory, onCategoryChange }: SidebarProps) => {
               key={id}
               variant={activeCategory === id ? "default" : "ghost"}
               onClick={() => onCategoryChange(id)}
-              className={`w-full justify-start text-left nav-button ${
-                activeCategory === id
-                  ? "active bg-primary/20 text-primary border border-primary/30"
-                  : "hover:bg-secondary/50 text-yellow-50"
-              }`}
+              className={`w-full justify-start text-left nav-button
+      ${activeCategory === id
+                  ? "bg-primary/20 text-primary border border-primary/30"
+                  : "text-foreground/80 hover:bg-secondary/50 hover:!text-white"
+                }`}
             >
               <Icon className="w-4 h-4 mr-3" />
               {label}
             </Button>
           ))}
+
         </div>
 
         <Separator className="my-4 bg-border/50" />
 
-        {/* My Library / Watchlist (visible for everyone; auth-gates Link) */}
         <div className="space-y-3 mb-6">
           <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider">
             My Library
           </h3>
           {watchlistButton}
 
-          {/* tiny poster preview */}
           {posters.length > 0 && (
             <div className="mt-2 flex gap-2 overflow-hidden">
               {posters.map((src, i) => (
@@ -143,20 +140,27 @@ export const Sidebar = ({ activeCategory, onCategoryChange }: SidebarProps) => {
           </h3>
 
           {loading ? (
-            <Button variant="ghost" className="w-full justify-start text-left nav-button" disabled>
+            <Button
+              variant="ghost"
+              className="w-full justify-start text-left nav-button"
+              disabled
+            >
               <User className="w-4 h-4 mr-3" />
               Loading…
             </Button>
           ) : user ? (
             <>
-              <Button variant="ghost" className="w-full justify-start text-left nav-button">
+              <Button
+                variant="ghost"
+                className="w-full justify-start text-left nav-button hover:bg-secondary/50 hover:!text-white"
+              >
                 <User className="w-4 h-4 mr-3" />
                 {user.displayName || user.email || "Profile"}
               </Button>
 
               <Button
                 variant="ghost"
-                className="w-full justify-start text-left nav-button hover:bg-secondary/50"
+                className="w-full justify-start text-left nav-button hover:bg-secondary/50 hover:!text-white"
                 onClick={() => signOut()}
               >
                 <LogOut className="w-4 h-4 mr-3" />
@@ -167,13 +171,18 @@ export const Sidebar = ({ activeCategory, onCategoryChange }: SidebarProps) => {
             <>
               <Button
                 variant="ghost"
-                className="w-full justify-start text-left nav-button hover:bg-secondary/50"
+                className="w-full justify-start text-left nav-button hover:bg-secondary/50 hover:!text-white"
                 onClick={() => setAuthOpen(true)}
               >
                 <LogIn className="w-4 h-4 mr-3" />
                 Sign In
               </Button>
-              <Button variant="ghost" className="w-full justify-start text-left nav-button" disabled>
+
+              <Button
+                variant="ghost"
+                className="w-full justify-start text-left nav-button"
+                disabled
+              >
                 <User className="w-4 h-4 mr-3" />
                 Profile
               </Button>

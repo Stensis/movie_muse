@@ -13,7 +13,7 @@ it("shows skeletons while loading", () => {
   // skeletons expose role="status"
   expect(
     screen.getAllByRole("status", { name: /loading movie/i })
-  ).toHaveLength(12); // or .toBeGreaterThan(0) if you prefer less brittleness
+  ).toHaveLength(12);
 });
 
 it("shows empty state when no movies", () => {

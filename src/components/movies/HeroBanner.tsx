@@ -54,7 +54,7 @@ export function HeroBannerCarousel({ movies, intervalMs = 6000 }: Props) {
     // slide transition
     const slideTransition: Transition = {
         duration: 0.55,
-        ease: [0.42, 0, 0.58, 1] as const, // cubic-bezier tuple
+        ease: [0.42, 0, 0.58, 1] as const, 
     };
 
     // Ken Burns (reduced-motion safe)

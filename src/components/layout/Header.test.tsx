@@ -2,7 +2,6 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { Header } from "./Header";
 
-// Stub SearchBar so Enter triggers onSearch
 vi.mock("@/components/ui/SearchBar", () => ({
   SearchBar: ({ onSearch, placeholder, className }: any) => (
     <input
