@@ -15,6 +15,7 @@ import {
     TabsList,
     TabsTrigger,
 } from "@/components/ui/tabs";
+import { Eye, EyeOff } from "lucide-react";
 
 type Props = { open: boolean; onOpenChange: (v: boolean) => void };
 
@@ -25,6 +26,52 @@ function GoogleIcon() {
         </svg>
     );
 }
+
+type PasswordFieldProps = {
+    id: string;
+    label: string;
+    value: string;
+    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    placeholder?: string;
+    autoComplete?: string;
+};
+
+function PasswordField({
+    id,
+    label,
+    value,
+    onChange,
+    placeholder = "••••••••",
+    autoComplete,
+}: PasswordFieldProps) {
+    const [show, setShow] = useState(false);
+
+    return (
+        <div className="grid gap-2">
+            <Label htmlFor={id}>{label}</Label>
+            <div className="relative">
+                <Input
+                    id={id}
+                    type={show ? "text" : "password"}
+                    value={value}
+                    onChange={onChange}
+                    placeholder={placeholder}
+                    autoComplete={autoComplete}
+                    className="pr-10"
+                />
+                <button
+                    type="button"
+                    onClick={() => setShow((s) => !s)}
+                    aria-label={show ? "Hide password" : "Show password"}
+                    className="absolute inset-y-0 right-2 flex items-center text-muted-foreground hover:text-foreground focus:outline-none"
+                >
+                    {show ? <EyeOff className="size-4" /> : <Eye className="size-4" />}
+                </button>
+            </div>
+        </div>
+    );
+}
+
 
 export function AuthDialog({ open, onOpenChange }: Props) {
     const { signIn, signUp, signInWithGoogle } = useAuth();
@@ -77,8 +124,6 @@ export function AuthDialog({ open, onOpenChange }: Props) {
                             <GoogleIcon />
                             Continue with Google
                         </Button>
-
-
                         <div className="grid gap-2">
                             <Label htmlFor="si-email">Email</Label>
                             <Input
@@ -90,13 +135,12 @@ export function AuthDialog({ open, onOpenChange }: Props) {
                             />
                         </div>
                         <div className="grid gap-2">
-                            <Label htmlFor="si-pass">Password</Label>
-                            <Input
+                            <PasswordField
                                 id="si-pass"
-                                type="password"
+                                label="Password"
                                 value={siPass}
                                 onChange={(e) => setSiPass(e.target.value)}
-                                placeholder="••••••••"
+                                autoComplete="current-password"
                             />
                         </div>
 
@@ -131,16 +175,15 @@ export function AuthDialog({ open, onOpenChange }: Props) {
                                 placeholder="you@example.com"
                             />
                         </div>
-                        <div className="grid gap-2">
-                            <Label htmlFor="su-pass">Password</Label>
-                            <Input
-                                id="su-pass"
-                                type="password"
-                                value={suPass}
-                                onChange={(e) => setSuPass(e.target.value)}
-                                placeholder="At least 6 characters"
-                            />
-                        </div>
+
+                        <PasswordField
+                            id="su-pass"
+                            label="Password"
+                            value={suPass}
+                            onChange={(e) => setSuPass(e.target.value)}
+                            placeholder="At least 6 characters"
+                            autoComplete="new-password"
+                        />
 
                         {err && <p className="text-sm text-red-500">{err}</p>}
 

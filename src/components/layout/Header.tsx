@@ -20,23 +20,39 @@ const BRANDS: Brand[] = [
 
 function BrandChip({ b }: { b: Brand }) {
   return (
-    <span className="inline-flex items-center gap-2 h-9 px-3 py-1.5 text-[11px] font-semibold transition" title={b.label}>
-      <img src={b.src} alt={`${b.label} logo`} className="h-10 md:h-8 w-full object-fit" loading="lazy" />
-      <span className="tracking-wide text-foreground/90 hidden xs:inline">{b.label}</span>
+    <span
+      className="inline-flex items-center gap-2 rounded-xl bg-white/5 px-3 py-1.5
+                 ring-1 ring-white/10 hover:bg-white/10 transition-colors shrink-0"
+      title={b.label}
+    >
+      {/* fixed square box + contain so logos don’t stretch */}
+      <img
+        src={b.src}
+        alt={`${b.label} logo`}
+        className="size-5 md:size-6 object-contain rounded-sm opacity-85 hover:opacity-100 transition"
+        loading="lazy"
+        decoding="async"
+      />
+      {/* show label on md+ only; icons only on mobile */}
+      <span className="hidden md:inline text-xs font-medium text-foreground/80 tracking-wide">
+        {b.label}
+      </span>
     </span>
   );
 }
 
 function LeftServicesTicker() {
+  // duplicate so the marquee can loop seamlessly
   const row = useMemo(() => [...BRANDS, ...BRANDS], []);
   return (
-    <div className="group relative h-10 w-full overflow-hidden" aria-label="streaming brands">
-      <div className="header-ticker flex gap-2 whitespace-nowrap pr-2">
+    <div className="group relative h-12 w-full overflow-hidden" aria-label="streaming brands">
+      <div className="header-ticker flex items-center gap-3 whitespace-nowrap pr-4">
         {row.map((b, i) => <BrandChip key={`${b.label}-${i}`} b={b} />)}
       </div>
+
       {/* soft fades on edges */}
-      <div className="pointer-events-none absolute inset-y-0 left-0 w-8 bg-gradient-to-r from-background to-transparent" />
-      <div className="pointer-events-none absolute inset-y-0 right-0 w-8 bg-gradient-to-l from-background to-transparent" />
+      <div className="pointer-events-none absolute inset-y-0 left-0 w-16 bg-gradient-to-r from-background to-transparent" />
+      <div className="pointer-events-none absolute inset-y-0 right-0 w-16 bg-gradient-to-l from-background to-transparent" />
     </div>
   );
 }
@@ -57,12 +73,8 @@ export const Header = ({ onSearch, onSortChange }: HeaderProps) => {
               <SearchBar onSearch={onSearch} placeholder="Search movies..." className="w-full" />
             </div>
 
-            {/* Select */}
             <Select defaultValue="score" onValueChange={onSortChange}>
-              <SelectTrigger
-                aria-label="Sort"                    // ✅ keep this
-                className="w-[140px] h-10 bg-secondary/50 border-border/50"
-              >
+              <SelectTrigger aria-label="Sort" className="w-[140px] h-10 bg-secondary/50 border-border/50">
                 <SelectValue placeholder="Sort by" />
               </SelectTrigger>
               <SelectContent>
@@ -72,7 +84,6 @@ export const Header = ({ onSearch, onSortChange }: HeaderProps) => {
                 <SelectItem value="title">Title</SelectItem>
               </SelectContent>
             </Select>
-
           </div>
         </div>
       </div>
