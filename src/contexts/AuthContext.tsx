@@ -6,9 +6,9 @@ import {
     signInWithPopup,
     signOut as fbSignOut,
     updateProfile,
-    type User,
 } from "firebase/auth";
 import { auth, googleProvider } from "@/lib/firebase";
+import type { User } from 'firebase/auth';
 
 type AppUser = Pick<User, "uid" | "email" | "displayName" | "photoURL"> | null;
 
