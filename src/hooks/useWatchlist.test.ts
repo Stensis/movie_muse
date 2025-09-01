@@ -1,9 +1,11 @@
-import { renderHook, act } from "@testing-library/react";
-import * as AuthCtx from "@/contexts/AuthContext";
-import { useWatchlist } from "@/hooks/useWatchlist";
+vi.mock('@/lib/firebase', () => ({ db: {} as any }));
+
+import { renderHook, act } from '@testing-library/react';
+import * as AuthCtx from '@/contexts/AuthContext';
+import { useWatchlist } from '@/hooks/useWatchlist';
 
 // Mock auth so the hook runs in "logged out" (local only) mode.
-vi.spyOn(AuthCtx, "useAuth").mockReturnValue({
+vi.spyOn(AuthCtx, 'useAuth').mockReturnValue({
   user: null,
   loading: false,
   signIn: vi.fn(),
@@ -12,18 +14,16 @@ vi.spyOn(AuthCtx, "useAuth").mockReturnValue({
   signInWithGoogle: vi.fn(),
 } as any);
 
-beforeEach(() => {
-  localStorage.clear();
-});
+beforeEach(() => localStorage.clear());
 
-it("adds / removes ids and persists to localStorage", () => {
+it('adds / removes ids and persists to localStorage', () => {
   const { result } = renderHook(() => useWatchlist());
 
   act(() => result.current.add(42));
   expect(result.current.has(42)).toBe(true);
-  expect(JSON.parse(localStorage.getItem("moviemuse_watchlist") || "[]")).toEqual([42]);
+  expect(JSON.parse(localStorage.getItem('moviemuse_watchlist') || '[]')).toEqual([42]);
 
   act(() => result.current.remove(42));
   expect(result.current.has(42)).toBe(false);
-  expect(JSON.parse(localStorage.getItem("moviemuse_watchlist") || "[]")).toEqual([]);
+  expect(JSON.parse(localStorage.getItem('moviemuse_watchlist') || '[]')).toEqual([]);
 });
